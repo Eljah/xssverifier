@@ -4,7 +4,7 @@ A little project for XSS-safe verification for Selenium
         <dependency>
             <groupId>com.github.eljah</groupId>
             <artifactId>xssverifier</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
         </dependency>
 
 How does the XSS and XSS sniffers work? XSS injection is a value inserted into some input text field that appears in some other pages. If in other pages where the value is displayed, the page can allow malicious javascript from the value to work. Javascript can just create an image or iframe with url on the third-party server. The URL of the resource requested by the malicious javascript will contain the value of document.cookie. If page allows maliciuos javascript to request image or iframe with URL like http://host:port//resource_prefix?document.cookie the third-party server, the sniffer, will receive the hijacked cookie value. That means that XSS attack has succeed and the attacker can use the cookie.
