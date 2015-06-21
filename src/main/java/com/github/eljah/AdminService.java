@@ -1,3 +1,5 @@
+package com.github.eljah;
+
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.ServerRunner;
 import org.apache.log4j.Logger;
@@ -22,7 +24,7 @@ public class AdminService extends NanoHTTPD {
     @Override public Response serve(IHTTPSession session) {
         Method method = session.getMethod();
         String uri = session.getUri();
-        log.info("Admin received "+method + " '" + uri + "' ");
+        log.info("com.github.eljah.Admin received "+method + " '" + uri + "' ");
 
         if (uri.equals("/start"))
         {
@@ -61,7 +63,7 @@ public class AdminService extends NanoHTTPD {
 
         String msg =
                 "<form action='?' method='get'>\n" +
-                        "  <p>Your name: <input type='text' name='port'></p>\n" +
+                        "  <p>Port number: <input type='text' name='port'></p>\n" +
                         "</form>\n";
 
         return new NanoHTTPD.Response(msg);

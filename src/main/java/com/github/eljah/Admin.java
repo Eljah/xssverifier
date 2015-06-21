@@ -1,9 +1,9 @@
+package com.github.eljah;
+
 import org.apache.log4j.Logger;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Ilya Evlampiev on 08.06.15.

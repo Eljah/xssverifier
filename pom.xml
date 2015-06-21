@@ -6,7 +6,7 @@
 
     <groupId>com.github.eljah</groupId>
     <artifactId>xssverifier</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <name>XSS Verifying library</name>
     <description>XSS Verifier is a library for verifying that the web application is XSS-free with Selenium</description>
     <url>https://github.com/Eljah/xssverifier</url>

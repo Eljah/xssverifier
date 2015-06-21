@@ -1,3 +1,5 @@
+package com.github.eljah;
+
 import org.apache.log4j.Logger;
 
 import java.text.MessageFormat;
@@ -58,7 +60,7 @@ public class XSSCheck {
     }
 
     public boolean getXSSCookiePassedStatus() {
-        log.info("The XSS cookie passed status is requested");
+        log.debug("The XSS cookie passed status is requested");
         return this.xssCookiePassed;
     }
 
@@ -68,7 +70,7 @@ public class XSSCheck {
     }
 
     public boolean getXSSURLCalledStatus() {
-        log.info("The XSS URL called status is requested");
+        log.debug("The XSS URL called status is requested");
         return this.xssURLCalled;
     }
 
@@ -108,7 +110,7 @@ public class XSSCheck {
     }
 
     public boolean getXSSCookieHijacked(String cookie) {
-        log.info("Hijack event for `" + cookie + "` requested");
+        log.debug("Hijack event for `" + cookie + "` requested");
         if (cookiesAndValues.containsKey(cookie)) {
             String valueToReturn = cookiesAndValues.get(cookie);
             log.info("Value for `" + cookie + "` is: " + valueToReturn);
